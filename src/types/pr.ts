@@ -7,6 +7,7 @@ export type pullRequest = {
         login: string
         avatar_url: string
     }
+    html_url: string
     closed_at?: string
     number: number
     merged_at: string

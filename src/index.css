@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+.dark body {
+  background-color: #111827;
+  /* Tailwind dark:bg-gray-900 */
+}
+
+/* Dark Mode Support */
+.dark {
+  background-color: #0b0d18;
+  color: white;
+}
+
+.dark .bg-white {
+  background-color: #1e1e2e !important;
+}
+
+.dark .border-gray-200 {
+  border-color: #44475a !important;
+}
+
+.dark .text-gray-900 {
+  color: #f8f8f2 !important;
+}
+
+.dark .hover\:bg-gray-100:hover {
+  background-color: #44475a !important;
+}
+
+[data-theme="light"] .dark\:bg-gray-800 {
+  background-color: #d1d5db !important;
+  /* Light mode gray-300 */
+}

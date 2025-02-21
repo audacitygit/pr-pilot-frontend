@@ -1,3 +1,5 @@
+"use client"
+
 import { ReactNode, useState, MouseEvent } from "react";
 import dayjs from "dayjs";
 import PRStateTag from "./PRStateTag";

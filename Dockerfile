@@ -6,11 +6,11 @@ FROM node:20-alpine AS builder
 # Set working directory
 WORKDIR /app
 
-# Install dependencies
+# Install dependencies separately (better caching)
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-# Copy project files
+# Copy only necessary files to prevent cache invalidation
 COPY . .
 
 # Build the Next.js app
@@ -23,15 +23,16 @@ FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Install production dependencies only
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+# Set production environment
+ENV NODE_ENV=production
+
+# Install only production dependencies (much faster than full install)
+COPY --from=builder /app/package.json /app/yarn.lock ./
+RUN yarn install --frozen-lockfile --production
 
 # Copy the built Next.js app from the builder stage
 COPY --from=builder /app/.next .next
 COPY --from=builder /app/public public
-COPY --from=builder /app/node_modules node_modules
-COPY --from=builder /app/package.json .
 
 # Expose port 3000 for Next.js
 EXPOSE 3000

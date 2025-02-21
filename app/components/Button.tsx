@@ -1,3 +1,4 @@
+"use client"
 import React, { MouseEvent } from "react";
 import { useTheme } from "../context/ThemeProvider";
 

@@ -1,5 +1,3 @@
-"use client"
-import { usePRs } from "../api/queries/prs/usePRs";
 import { Accordion } from "../components/Accordion/Accordion";
 import { AIReviewCard } from "../components/Cards/AiReviewCard";
 import { FileChangesCard } from "../components/Cards/FileChangesCard";
@@ -7,20 +5,15 @@ import { PRDetailsCard } from "../components/Cards/PRDetailsCard";
 import AccordionItem from "../components/PR_AccordionItem";
 import { PullRequest } from "../types/pr";
 import { categorizePRs } from "../utils/helpers";
+import { getPullRequests } from "../api/queries/prs/getPRs";
 
+export default async function Dashboard() {
+    //TODO: Setup error messaging
 
-
-
-
-export default function Dashboard() {
-    const { pullRequests, isLoading, isError } = usePRs();
-
-    if (isLoading) return <p className="text-center text-lg font-semibold">Loading PRs...</p>;
-    if (isError) return <p className="text-center text-lg text-red-500">Error loading PRs: {isError.message}</p>;
-
+    const { data: pullRequests } = await getPullRequests()
     const { open, closed, merged } = categorizePRs(pullRequests);
-    return (
 
+    return (
         <div className="space-y-6">
             {/* Helper function to avoid repetition */}
             {[

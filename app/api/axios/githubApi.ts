@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const token = process.env.GITHUB_TOKEN
 
 const githubApi = axios.create({

@@ -1,65 +1,48 @@
-"use client";
-
+import Link from "next/link";
 import Image from "next/image";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-export default function Home() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  // ✅ Use useEffect to prevent redirecting during render
-  useEffect(() => {
-    if (session) {
-      router.push("/dashboard");
-    }
-  }, [session, router]);
-
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
-
+export default function LandingPage() {
   return (
-    <div className="min-h-screen flex">
-      {/* Left Side: Branding & Tagline with Grey Background */}
-      <div className="w-1/2 bg-gray-200 flex items-center px-20 py-12">
-        <div className="w-full">
-          {/* PR Pilot Text with Logo at the End */}
-          <div className="flex items-center space-x-3 mb-6">
-            <h1 className="text-6xl font-extrabold text-gray-900">
-              <span className="text-black">PR </span>
-              <span className="text-blue-500">Pilot</span>
-            </h1>
-            <Image height={20} width={20} src="/logo.png" alt="PR Pilot Logo" className="w-14 h-14 rounded-full" />
-          </div>
+    <div className="min-h-screen flex flex-col items-center justify-center text-center bg-gray-50 px-6">
+      {/* Logo */}
+      <Image src="/logo.png" alt="PR Pilot Logo" width={120} height={120} className="mb-6" />
 
-          {/* Left-Aligned Centered Text */}
-          <p className="text-gray-800 text-3xl font-semibold leading-snug max-w-lg">
-            AI-powered <span className="text-blue-500">PR management</span> and
-            <span className="text-blue-500"> automated code reviews</span>.
-          </p>
-        </div>
+      {/* Hero Section */}
+      <h1 className="text-5xl font-bold text-gray-900">Manage Your Pull Requests with AI</h1>
+      <p className="text-lg text-gray-700 mt-4 max-w-2xl">
+        PR Pilot helps you track, review, and optimize your GitHub pull requests effortlessly.
+      </p>
 
-        {/* Copyright Notice */}
-        <p className="text-gray-500 text-sm absolute bottom-8 left-8">© 2025 PR Pilot. All rights reserved.</p>
+      {/* Call to Action */}
+      <div className="mt-6 flex space-x-4">
+        <Link href="/auth/signin" className="px-6 py-3 bg-blue-600 text-white rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 transition">
+          Get Started Free
+        </Link>
+        <Link href="/pricing" className="px-6 py-3 border border-gray-600 rounded-lg text-lg font-semibold text-gray-800 shadow-md hover:bg-gray-200 transition">
+          View Pricing
+        </Link>
       </div>
 
-      {/* Right Side: GitHub Login */}
-      <div className="w-1/2 flex items-center justify-center bg-white p-12">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900">Sign in to PR Pilot</h2>
-          <p className="text-gray-500 text-sm mt-2">Use GitHub to authenticate</p>
-
-          {/* GitHub Sign-In Button */}
-          <button
-            onClick={() => signIn("github")}
-            className="w-full flex items-center justify-center p-3 border border-gray-300 rounded hover:bg-gray-100 mt-6"
-          >
-            Sign in with GitHub
-          </button>
+      {/* Features Section */}
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl">
+        <div className="p-6 bg-white shadow-lg rounded-lg border">
+          <h3 className="text-2xl font-semibold text-gray-900">Track Pull Requests</h3>
+          <p className="text-gray-700 mt-2">View and manage PRs across all your repositories with ease.</p>
+        </div>
+        <div className="p-6 bg-white shadow-lg rounded-lg border">
+          <h3 className="text-2xl font-semibold text-gray-900">AI Code Reviews</h3>
+          <p className="text-gray-700 mt-2">Get AI-generated feedback to improve your code quality.</p>
+        </div>
+        <div className="p-6 bg-white shadow-lg rounded-lg border">
+          <h3 className="text-2xl font-semibold text-gray-900">Webhooks & Automation</h3>
+          <p className="text-gray-700 mt-2">Automatically receive PR updates and trigger AI reviews.</p>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="mt-16 text-gray-600 text-sm">
+        © 2025 PR Pilot. All rights reserved.
+      </footer>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import clientPromise from "@/lib/mongodb";
 export const authOptions: AuthOptions = {
     providers: [
         GitHubProvider({
-            clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID!,
+            clientId: process.env.GITHUB_CLIENT_ID!,
             clientSecret: process.env.GITHUB_CLIENT_SECRET!,
         }),
     ],

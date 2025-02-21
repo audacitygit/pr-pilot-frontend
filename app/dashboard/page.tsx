@@ -6,10 +6,17 @@ import AccordionItem from "../components/PR_AccordionItem";
 import { PullRequest } from "../types/pr";
 import { categorizePRs } from "../utils/helpers";
 import { getPullRequests } from "../api/queries/prs/getPRs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/authconfig";
+import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
     //TODO: Setup error messaging
-
+    const session = await getServerSession(authOptions)
+    console.log({ session })
+    if (!session) {
+        redirect("/auth/signin")
+    }
     const { data: pullRequests } = await getPullRequests()
     const { open, closed, merged } = categorizePRs(pullRequests);
 

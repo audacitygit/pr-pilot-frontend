@@ -1,23 +1,29 @@
-import { Accordion } from "../components/Accordion/Accordion";
-import { AIReviewCard } from "../components/Cards/AiReviewCard";
-import { FileChangesCard } from "../components/Cards/FileChangesCard";
-import { PRDetailsCard } from "../components/Cards/PRDetailsCard";
-import AccordionItem from "../components/PR_AccordionItem";
-import { PullRequest } from "../types/pr";
-import { categorizePRs } from "../utils/helpers";
-import { getPullRequests } from "../api/queries/prs/getPRs";
+import { Accordion } from "../../components/Accordion/Accordion";
+import { AIReviewCard } from "../../components/Cards/AiReviewCard";
+import { FileChangesCard } from "../../components/Cards/FileChangesCard";
+import { PRDetailsCard } from "../../components/Cards/PRDetailsCard";
+import PRAccordionItem from "../../components/PR_AccordionItem";
+import { PullRequest } from "../../types/pr";
+import { categorizePRs } from "../../utils/helpers";
+import { getPullRequests } from "../../api/queries/prs/getPRs";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/authconfig";
+import { authOptions } from "../../api/auth/[...nextauth]/authconfig";
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
     //TODO: Setup error messaging
     const session = await getServerSession(authOptions)
-    console.log({ session })
+
     if (!session) {
         redirect("/auth/signin")
     }
-    const { data: pullRequests } = await getPullRequests()
+
+    if (session.user.name) {
+
+    }
+
+    const { data: pullRequests } = await getPullRequests(session.user.name)
+    console.log({ session, user: session.user, name: session.user.name })
     const { open, closed, merged } = categorizePRs(pullRequests);
 
     return (
@@ -33,7 +39,7 @@ export default async function Dashboard() {
                         <h2 className="text-xl font-bold text-gray-900 mb-3">{title}</h2>
                         <Accordion>
                             {prs.map((pr: PullRequest) => (
-                                <AccordionItem
+                                <PRAccordionItem
                                     prUrl={pr.html_url}
                                     key={pr.number}
                                     state={pr.state}
@@ -48,7 +54,7 @@ export default async function Dashboard() {
                                     <PRDetailsCard pr={pr} />
                                     <FileChangesCard />
                                     <AIReviewCard />
-                                </AccordionItem>
+                                </PRAccordionItem>
                             ))}
                         </Accordion>
                     </div>

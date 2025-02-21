@@ -7,7 +7,7 @@ import { useTheme } from "../context/ThemeProvider";
 import Button from "./Button"; // Import the reusable Button component
 import Image from "next/image";
 
-interface AccordionItemProps {
+interface PRAccordionItemProps {
     children: ReactNode;
     state: string;
     reviewed: boolean;
@@ -21,7 +21,7 @@ interface AccordionItemProps {
 
 }
 
-export default function AccordionItem({
+export default function PRRAccordionItem({
     children,
     state = "unkwn",
     reviewed = false,
@@ -32,7 +32,7 @@ export default function AccordionItem({
     closed_on,
     merged_at,
     prUrl,
-}: AccordionItemProps) {
+}: PRAccordionItemProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { theme } = useTheme();
     const formattedCreatedAt = dayjs(created_at).format("MMM DD, YYYY - hh:mm A");

@@ -30,5 +30,8 @@ export const authOptions: AuthOptions = {
             return token;
         },
     },
+    pages: {
+        signIn: "/auth/signin"
+    },
     secret: process.env.NEXTAUTH_SECRET,
 };

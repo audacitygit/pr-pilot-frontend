@@ -6,6 +6,9 @@ FROM node:20-alpine AS builder
 # Set working directory
 WORKDIR /app
 
+# Install CA Certificates (Required for MongoDB Atlas TLS)
+RUN apk add --no-cache ca-certificates && update-ca-certificates
+
 # Install dependencies separately (better caching)
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
@@ -25,6 +28,9 @@ WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV=production
+
+# Install CA Certificates (Required for MongoDB Atlas TLS)
+RUN apk add --no-cache ca-certificates && update-ca-certificates
 
 # Install only production dependencies (much faster than full install)
 COPY --from=builder /app/package.json /app/yarn.lock ./

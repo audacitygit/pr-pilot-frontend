@@ -1,3 +1,4 @@
+"use server"
 import githubApi from "../../axios/githubApi";
 
 export const getPullRequests = async (username) => {

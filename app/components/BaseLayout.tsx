@@ -3,6 +3,7 @@ import { ReactNode, useState } from "react";
 import { useTheme } from "../context/ThemeProvider";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface BaseLayoutProps {
     logoSrc: string;
@@ -23,19 +24,16 @@ export function BaseLayout({
     userProfile,
     children
 }: BaseLayoutProps) {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(true); // ✅ Sidebar starts open
     const [menuOpen, setMenuOpen] = useState(false);
     const { theme, toggleTheme } = useTheme();
 
     return (
         <div className={`flex flex-col h-screen w-screen overflow-hidden ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>
-            {/* 🔹 Top Navigation */}
+            {/* 🔹 Top Navigation (No Sidebar Toggle Here) */}
             <header className={`flex justify-between items-center shadow-md px-6 py-3 border-b ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
-                {/* Left: Hamburger + Logo & Title (Stacks on Mobile) */}
+                {/* Logo & Title */}
                 <div className="flex items-center space-x-4">
-                    <button className="lg:hidden p-2" onClick={() => setSidebarOpen(!sidebarOpen)}>
-                        {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
                     <Image height={20} width={20} src={logoSrc} alt="Company Logo" className="h-10 w-10" />
                     <div>
                         <h1 className="text-lg sm:text-xl font-bold">{headerTitle}</h1>
@@ -73,16 +71,25 @@ export function BaseLayout({
 
             {/* 🔹 Main Layout */}
             <div className="flex flex-1 overflow-hidden">
-                {/* Sidebar (Now Responsive) */}
-                <aside className={`fixed lg:relative transition-all shadow-md ${sidebarOpen ? "w-56" : "w-16"} h-full overflow-hidden ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
+                {/* Sidebar (with Toggle Inside) */}
+                <aside className={`transition-all shadow-md h-full overflow-hidden ${sidebarOpen ? "w-56" : "w-16"} ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
                     <div className="flex flex-col h-full">
+                        {/* Sidebar Toggle (Moved Here) */}
+                        <button className="p-4 self-end" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                            {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+                        </button>
+
                         {/* Sidebar Items */}
                         <nav className="flex-1 px-2 py-4 space-y-2">
                             {sideNavItems.map((item, index) => (
-                                <button key={index} onClick={item.onClick} className="flex items-center space-x-3 px-4 py-2 w-full rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <Link
+                                    key={index}
+                                    href={item.href || "#"} // Ensure it doesn't break if href is missing
+                                    className="flex items-center space-x-3 px-4 py-2 w-full rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                                >
                                     {item.icon}
                                     {sidebarOpen && <span>{item.label}</span>}
-                                </button>
+                                </Link>
                             ))}
                         </nav>
                     </div>

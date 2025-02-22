@@ -1,66 +1,62 @@
-import { Accordion } from "../../components/Accordion/Accordion";
-import { AIReviewCard } from "../../components/Cards/AiReviewCard";
-import { FileChangesCard } from "../../components/Cards/FileChangesCard";
-import { PRDetailsCard } from "../../components/Cards/PRDetailsCard";
-import PRAccordionItem from "../../components/PR_AccordionItem";
-import { PullRequest } from "../../types/pr";
-import { categorizePRs } from "../../utils/helpers";
-import { getPullRequests } from "../../api/queries/prs/getPRs";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../api/auth/[...nextauth]/authconfig";
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function Dashboard() {
-    //TODO: Setup error messaging
-    const session = await getServerSession(authOptions)
+import WidgetCard from "@/app/components/Cards/WidgetCard";
+import ActivePullRequestsWidget from "@/app/components/Widgets/ActivePullRequestsWidget";
+import AIReviewStatusWidget from "@/app/components/Widgets/AIReviewStatusWidget";
+import { Folder, BarChart, Bell } from "lucide-react";
 
-    if (!session) {
-        redirect("/auth/signin")
-    }
+export default function Dashboard() {
+    const prsNeedingReview = [
+        { id: 11, repo: "pr-pilot-frontend" },
+        { id: 141, repo: "super-duper-long-repo-name" },
+        { id: 12, repo: "pr-pilot-frontend" },
+        { id: 144, repo: "super-duper-long-repo-name" },
+        { id: 13, repo: "pr-pilot-frontend" },
+        { id: 122, repo: "super-duper-long-repo-name" },
+    ];
 
-    if (session.user.name) {
-
-    }
-
-    const { data: pullRequests } = await getPullRequests(session.user.name)
-    console.log({ session, user: session.user, name: session.user.name })
-    const { open, closed, merged } = categorizePRs(pullRequests);
+    const prsWaitingMerge = [
+        { id: 33, repo: "backend-service" },
+        { id: 92, repo: "database-migrations" }
+    ];
 
     return (
-        <div className="space-y-6">
-            {/* Helper function to avoid repetition */}
-            {[
-                { title: "Open Pull Requests", prs: open, borderColor: "border-green-500" },
-                { title: "Merged Pull Requests", prs: merged, borderColor: "border-purple-500" },
-                { title: "Closed Pull Requests", prs: closed, borderColor: "border-red-500" },
-            ].map(({ title, prs, borderColor }) =>
-                prs.length > 0 ? (
-                    <div key={title} className={`border-l-4 ${borderColor} bg-white shadow-lg rounded-lg p-4`}>
-                        <h2 className="text-xl font-bold text-gray-900 mb-3">{title}</h2>
-                        <Accordion>
-                            {prs.map((pr: PullRequest) => (
-                                <PRAccordionItem
-                                    prUrl={pr.html_url}
-                                    key={pr.number}
-                                    state={pr.state}
-                                    reviewed={pr.state !== "open"}
-                                    title={pr.title}
-                                    created_at={pr.created_at}
-                                    user={pr.user.login}
-                                    userAvatarUrl={pr.user.avatar_url}
-                                    closed_on={pr.closed_at}
-                                    merged_at={pr.merged_at}
-                                >
-                                    <PRDetailsCard pr={pr} />
-                                    <FileChangesCard />
-                                    <AIReviewCard />
-                                </PRAccordionItem>
-                            ))}
-                        </Accordion>
-                    </div>
-                ) : null
-            )}
-        </div>
+        <div className="p-8 space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* Active PRs Summary */}
+                <ActivePullRequestsWidget prsNeedingReview={prsNeedingReview} prsWaitingMerge={prsWaitingMerge} />
 
+                {/* AI Review Status */}
+                <AIReviewStatusWidget />
+
+                {/* Repository Overview */}
+                <WidgetCard title="Repository Overview" icon={Folder}>
+                    <div className="bg-gray-100 p-3 rounded-lg h-40 flex flex-col gap-1">
+                        <p className="text-lg font-medium">Total Connected Repositories: <strong>8</strong></p>
+                        <p className="text-lg font-medium">Most Active Repo: <strong>repo-frontend</strong></p>
+                        <p className="text-lg font-medium">Last Updated Repo: <strong>repo-api</strong></p>
+                    </div>
+                </WidgetCard>
+
+                {/* Insights & Analytics */}
+                <WidgetCard title="Insights & Analytics" icon={BarChart}>
+                    <div className="bg-gray-100 p-3 rounded-lg h-40 flex flex-col gap-1">
+                        <p className="text-lg font-medium">Avg PR Review Time: <strong>2.5 days</strong></p>
+                        <p className="text-lg font-medium">Most Active Contributor: <strong>@dev-user</strong></p>
+                        <p className="text-lg font-medium">PR Merge Rate (30 Days): <strong>78%</strong></p>
+                        <p className="text-lg font-medium">AI vs. Human Reviews: <strong>62% AI, 38% Human</strong></p>
+                    </div>
+                </WidgetCard>
+
+                {/* Notifications & Mentions */}
+                <WidgetCard title="Notifications" icon={Bell}>
+                    <div className="bg-gray-100 p-3 rounded-lg h-40 flex flex-col gap-1">
+                        <p className="text-sm text-gray-700">You were assigned to review PR #42</p>
+                        <p className="text-sm text-gray-700">Your PR #35 was merged!</p>
+                        <p className="text-sm text-gray-700">New comments on PR #28</p>
+                    </div>
+                </WidgetCard>
+            </div>
+        </div>
     );
 }

@@ -1,8 +1,12 @@
+
+import { postReposToPRPilot } from "@/app/api/actions/postRepoToPRPilot";
+import { useGithubSession } from "@/lib/queries/session/useGithubUserSession";
 import { useState } from "react";
 
-export default function AddRepoModal({ onClose, gitRepos }) {
+export default function AddRepoModal({ onClose, gitRepos, userRepos }) {
     const [selectedRepos, setSelectedRepos] = useState([]);
-
+    const { session } = useGithubSession()
+    console.log({ gitRepos })
     // Handle repository selection
     const handleSelectRepo = (repo) => {
         if (!selectedRepos.find((r) => r.id === repo.id)) {
@@ -15,8 +19,16 @@ export default function AddRepoModal({ onClose, gitRepos }) {
         setSelectedRepos(selectedRepos.filter((repo) => repo.id !== repoId));
     };
 
+    const handleAddRepos = async () => {
+        const response = await postReposToPRPilot(selectedRepos, session)
+        //TODO: toast here, use loading state
+        if (response.ok || response) {
+            onClose()
+        }
+    }
+
     // Get available repos that haven't been selected
-    const availableRepos = gitRepos.filter((repo) => !selectedRepos.some((r) => r.id === repo.id));
+    const availableRepos = gitRepos.filter((repo) => ![...selectedRepos, ...userRepos].some((r) => r.id === repo.id));
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -66,6 +78,7 @@ export default function AddRepoModal({ onClose, gitRepos }) {
                     <button
                         className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500"
                         disabled={selectedRepos.length === 0}
+                        onClick={handleAddRepos}
                     >
                         Add Repositories
                     </button>

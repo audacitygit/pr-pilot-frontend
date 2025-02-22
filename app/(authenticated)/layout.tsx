@@ -1,6 +1,5 @@
 "use client"
 
-import { signOut } from "next-auth/react";
 import { BaseLayout } from "../components/BaseLayout";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
@@ -32,7 +31,7 @@ export default function DashboardLayout({ children }) {
         },
         {
             label: "Sign Out",
-            onClick: () => signOut({ callbackUrl: "/" })
+            onClick: () => { }
         }
     ]
 

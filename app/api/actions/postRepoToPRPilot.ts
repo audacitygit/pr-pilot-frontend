@@ -9,7 +9,7 @@ export async function postReposToPRPilot(repositories, session) {
     const githubId = session.githubId
     console.log(githubId, orgId)
     try {
-        const response = await prPilotApi.post("/user-repos", { repositories, githubId, orgId, isOrg });
+        const response = await prPilotApi.post("/repos", { repositories, githubId, orgId, isOrg });
         console.log({ response })
         return response.data;
     } catch (error) {

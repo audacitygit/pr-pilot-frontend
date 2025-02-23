@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const prPilotApi = axios.create({
-    baseURL: process.env.PR_PILOT_API_BASE_URL || "http://localhost:5000/api",
+    baseURL: "https://pr-pilot-next.fly.dev",
     withCredentials: true,
     headers: {
         "Content-Type": "application/json",

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { icons, Loader2 } from "lucide-react";
 import { useGithubSession } from "@/hooks/sessionHooks/useGithubUserSession"; // ✅ Using our custom hook
 
-const API_BASE_URL = "https://pr-pilot-next.fly.dev";
+const API_BASE_URL = "https://pr-pilot-api.fly.dev";
 
 export default function GitHubButton() {
     const router = useRouter();

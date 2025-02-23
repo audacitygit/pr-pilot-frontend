@@ -1,19 +1,37 @@
-"use client"
+"use client";
 
 import { Accordion } from "@/components/Accordion/Accordion";
 import { PullRequest } from "../../../types/pr";
 import { categorizePRs } from "../../utils/helpers";
-import { useGithubSession } from "@/hooks/sessionHooks/useGithubUserSession";
 import PRRAccordionItem from "@/components/PR_AccordionItem";
 import { PRDetailsCard } from "@/components/Cards/PRDetailsCard";
 import { FileChangesCard } from "@/components/Cards/FileChangesCard";
 import { AIReviewCard } from "@/components/Cards/AiReviewCard";
+import useFetchReposById from "@/hooks/pilotApi/queries/useFetchReposById";
+import useFetchPullRequests from "@/hooks/pilotApi/queries/useFetchPulls";
+import { useSessionContext } from "@/context/SessionProvider";
+
 
 export default function Pulls() {
-    const { session } = useGithubSession()
+    // ✅ Fetch repositories first
+    const session = useSessionContext()
     console.log({ session })
-    const pullRequests = []
+
+    const { data, isLoading: repoLoading, error: repoError } = useFetchReposById(session);
+    console.log("datainpage", data)
+    // ✅ Extract repo IDs (if data is available)
+    const repoIds = data?.map(repo => repo.id) || [];
+    console.log("repoidsinpage", { repoIds })
+
+    // ✅ Fetch all pull requests for these repo IDs
+    const { pulls: pullRequests, loading: prLoading, error: prError } = useFetchPullRequests(repoIds);
+    console.log({ pullRequests })
+    // ✅ Categorize PRs
     const { open, closed, merged } = categorizePRs(pullRequests);
+
+    // ✅ Handle loading state
+    if (repoLoading || prLoading) return <p>Loading pull requests...</p>;
+    if (repoError || prError) return <p>Error fetching data.</p>;
 
     return (
         <div className="space-y-6">
@@ -39,6 +57,7 @@ export default function Pulls() {
                                     userAvatarUrl={pr.user.avatar_url}
                                     closed_on={pr.closed_at}
                                     merged_at={pr.merged_at}
+                                    base_repo_name={pr.base.repo.name}
                                 >
                                     <PRDetailsCard pr={pr} />
                                     <FileChangesCard />
@@ -50,6 +69,5 @@ export default function Pulls() {
                 ) : null
             )}
         </div>
-
     );
 }

@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import { ReactNode, useState, MouseEvent } from "react";
 import dayjs from "dayjs";
 import PRStateTag from "./PRStateTag";
-import Button from "./Button"; // Import the reusable Button component
+import Button from "./Button";
 import Image from "next/image";
-import { useTheme } from "@/app/context/ThemeProvider";
+import { useTheme } from "@/context/ThemeProvider";
 
 interface PRAccordionItemProps {
     children: ReactNode;
@@ -18,12 +18,12 @@ interface PRAccordionItemProps {
     closed_on?: string;
     merged_at?: string;
     prUrl: string;
-
+    base_repo_name: string;
 }
 
 export default function PRRAccordionItem({
     children,
-    state = "unkwn",
+    state = "unknown",
     reviewed = false,
     title = "TKT-001: Default Title",
     created_at = new Date(),
@@ -32,6 +32,7 @@ export default function PRRAccordionItem({
     closed_on,
     merged_at,
     prUrl,
+    base_repo_name,
 }: PRAccordionItemProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { theme } = useTheme();
@@ -39,9 +40,9 @@ export default function PRRAccordionItem({
     const formattedClosedOn = closed_on ? dayjs(closed_on).format("MMM DD, YYYY - hh:mm A") : null;
 
     const handleViewPrClick = (e: MouseEvent) => {
-        e.stopPropagation()
-        window.open(prUrl, "_blank")
-    }
+        e.stopPropagation();
+        window.open(prUrl, "_blank");
+    };
 
     return (
         <div className={`w-full rounded-lg shadow-md overflow-hidden mb-4 transition-all
@@ -53,10 +54,13 @@ export default function PRRAccordionItem({
                             ${theme === "dark" ? "bg-gray-900 hover:bg-gray-700" : "bg-gray-200 hover:bg-gray-400"}`}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                {/* Column 1 - PR State & Title */}
+                {/* Column 1 - PR State & Title with Repo Name */}
                 <div className="flex flex-wrap items-center gap-3">
                     <PRStateTag state={state} merged_at={merged_at} />
-                    <p className="text-sm sm:text-lg font-bold">{title}</p>
+                    <div className="flex flex-col">
+                        <p className="text-xs sm:text-sm font-semibold">{title}</p> {/* ✅ Smaller Title */}
+                        <p className="text-xs text-gray-500">{state} in {base_repo_name}</p> {/* ✅ Status & Repo Name */}
+                    </div>
                 </div>
 
                 {/* Column 2 - PR Metadata (Opened, Closed) */}

@@ -6,5 +6,6 @@ export const SWR_KEYS = {
     GITHUB_ORG_REPO_PULLS: (orgName: string, repo: string) => `/repos/${orgName}/${repo}/pulls`,
 
     /* ----------------------- PilotAPI Keys -------------------- */
-    PILOT_API_USER_REPOS: (githubId: string) => `api/repos/${githubId}`
+    PILOT_API_USER_REPOS: (githubId: string) => `api/repos/${githubId}`,
+    PILOT_API_ALL_PULLS: (repoIds: string) => `/api/pulls?repoIds=${repoIds}`,
 }

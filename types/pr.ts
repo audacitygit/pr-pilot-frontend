@@ -1,4 +1,6 @@
 export type PullRequest = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    base: any
     state: string,
     reviewed: boolean,
     title: string,

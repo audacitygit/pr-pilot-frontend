@@ -20,8 +20,9 @@ export default function Repos() {
         const getRepos = async () => {
             setLoading(true)
             if (session) {
-                const { data } = await getReposFromPRPilot(session)
-                setRepos(data)
+                const data = await getReposFromPRPilot(session)
+                console.log({ data })
+                setRepos(data.repositories)
             }
             setLoading(false)
         }
@@ -38,7 +39,7 @@ export default function Repos() {
         <div className="space-y-6 p-6">
             {loading ? (
                 <p>Loading repositories...</p>
-            ) : repos.length === 0 ? (
+            ) : repos?.length === 0 ? (
                 <div className="flex flex-col items-center space-y-4 p-6 bg-gray-100 rounded-lg shadow">
                     <p className="text-lg text-gray-600">You haven&apos;t added any repositories.</p>
                     <button
@@ -50,7 +51,7 @@ export default function Repos() {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {repos.map((repo) => (
+                    {repos?.map((repo) => (
                         <RepoCard key={repo.id} repo={repo} />
                     ))}
                     <button

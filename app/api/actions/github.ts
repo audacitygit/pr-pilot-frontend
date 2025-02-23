@@ -1,6 +1,6 @@
 "use server";
 
-import githubApi from "../../../lib/api/githubApi";
+import githubApi from "../../../lib/api/instances/githubApi";
 
 // ✅ Server-side function to fetch user repositories
 export async function fetchGithubUserRepos(username: string) {

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { Home, Folder, GitPullRequest, Settings } from "lucide-react";
 import { BaseLayout } from "@/components/BaseLayout";
+import { SessionProvider } from "@/context/SessionProvider";
 
 export default function DashboardLayout({ children }) {
     const pathname = usePathname()
@@ -60,5 +61,11 @@ export default function DashboardLayout({ children }) {
     ];
 
 
-    return <BaseLayout headerTitle={headerTitle} userProfile={{ avatarUrl: "/logo.png", name: "" }} logoSrc="/logo.png" menuItems={menuItems} sideNavItems={sideNavItems}>{children}</BaseLayout>
+    return (
+        <SessionProvider>
+            <BaseLayout headerTitle={headerTitle} userProfile={{ avatarUrl: "/logo.png", name: "" }} logoSrc="/logo.png" menuItems={menuItems} sideNavItems={sideNavItems}>
+                {children}
+            </BaseLayout>
+        </SessionProvider>
+    )
 }

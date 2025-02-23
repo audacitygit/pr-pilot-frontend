@@ -1,5 +1,5 @@
 "use client"
-import { useTheme } from "@/app/context/ThemeProvider";
+import { useTheme } from "@/context/ThemeProvider";
 import React, { MouseEvent } from "react";
 
 interface ButtonProps {

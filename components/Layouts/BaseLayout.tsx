@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, useState } from "react";
 import { Moon, Sun, Menu, X } from "lucide-react";
-import { useTheme } from "@/app/context/ThemeProvider";
+import { useTheme } from "@/context/ThemeProvider";
 import Image from "next/image";
 
 interface BaseLayoutProps {

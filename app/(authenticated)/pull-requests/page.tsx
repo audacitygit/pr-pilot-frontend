@@ -10,22 +10,25 @@ import { AIReviewCard } from "@/components/Cards/AiReviewCard";
 import useFetchReposById from "@/hooks/pilotApi/queries/useFetchReposById";
 import useFetchPullRequests from "@/hooks/pilotApi/queries/useFetchPulls";
 import { useSessionContext } from "@/context/SessionProvider";
-
+import { useTheme } from "@/context/ThemeProvider"; // ✅ Import Theme Context
 
 export default function Pulls() {
     // ✅ Fetch repositories first
-    const session = useSessionContext()
-    console.log({ session })
+    const session = useSessionContext();
+    const { theme } = useTheme(); // ✅ Get current theme
+    console.log({ session });
 
     const { data, isLoading: repoLoading, error: repoError } = useFetchReposById(session);
-    console.log("datainpage", data)
+    console.log("datainpage", data);
+
     // ✅ Extract repo IDs (if data is available)
     const repoIds = data?.map(repo => repo.id) || [];
-    console.log("repoidsinpage", { repoIds })
+    console.log("repoidsinpage", { repoIds });
 
     // ✅ Fetch all pull requests for these repo IDs
     const { pulls: pullRequests, loading: prLoading, error: prError } = useFetchPullRequests(repoIds);
-    console.log({ pullRequests })
+    console.log({ pullRequests });
+
     // ✅ Categorize PRs
     const { open, closed, merged } = categorizePRs(pullRequests);
 
@@ -42,8 +45,15 @@ export default function Pulls() {
                 { title: "Closed Pull Requests", prs: closed, borderColor: "border-red-500" },
             ].map(({ title, prs, borderColor }) =>
                 prs.length > 0 ? (
-                    <div key={title} className={`border-l-4 ${borderColor} bg-white shadow-lg rounded-lg p-4`}>
-                        <h2 className="text-xl font-bold text-gray-900 mb-3">{title}</h2>
+                    <div
+                        key={title}
+                        className={`border-l-4 ${borderColor} shadow-lg rounded-lg p-4 transition-all
+                                    ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-900"}`}
+                    >
+                        <h2 className={`text-xl font-bold mb-3 transition-all 
+                                       ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+                            {title}
+                        </h2>
                         <Accordion>
                             {prs.map((pr: PullRequest) => (
                                 <PRRAccordionItem

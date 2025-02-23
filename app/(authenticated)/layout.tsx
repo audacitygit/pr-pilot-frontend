@@ -1,10 +1,11 @@
 "use client"
 
-import { signOut } from "next-auth/react";
-import { BaseLayout } from "../components/BaseLayout";
+
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { Home, Folder, GitPullRequest, Settings } from "lucide-react";
+import { BaseLayout } from "@/components/BaseLayout";
+import { SessionProvider } from "@/context/SessionProvider";
 
 export default function DashboardLayout({ children }) {
     const pathname = usePathname()
@@ -32,7 +33,7 @@ export default function DashboardLayout({ children }) {
         },
         {
             label: "Sign Out",
-            onClick: () => signOut({ callbackUrl: "/" })
+            onClick: () => { }
         }
     ]
 
@@ -50,7 +51,7 @@ export default function DashboardLayout({ children }) {
         {
             icon: <GitPullRequest size={20} />,
             label: "Pull Requests",
-            href: "/pulls",
+            href: "/pull-requests",
         },
         {
             icon: <Settings size={20} />,
@@ -60,5 +61,11 @@ export default function DashboardLayout({ children }) {
     ];
 
 
-    return <BaseLayout headerTitle={headerTitle} userProfile={{ avatarUrl: "/logo.png", name: "" }} logoSrc="/logo.png" menuItems={menuItems} sideNavItems={sideNavItems}>{children}</BaseLayout>
+    return (
+        <SessionProvider>
+            <BaseLayout headerTitle={headerTitle} userProfile={{ avatarUrl: "/logo.png", name: "" }} logoSrc="/logo.png" menuItems={menuItems} sideNavItems={sideNavItems}>
+                {children}
+            </BaseLayout>
+        </SessionProvider>
+    )
 }

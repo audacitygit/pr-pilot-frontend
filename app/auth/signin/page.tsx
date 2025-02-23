@@ -1,6 +1,6 @@
 "use client";
 
-import GitHubButton from "@/app/components/Buttons/GitHubButton";
+import GitHubButton from "@/components/Buttons/GitHubButton";
 import { Suspense } from "react";
 
 export default function SignupPage() {

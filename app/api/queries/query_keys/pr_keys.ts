@@ -1,1 +1,0 @@
-export const ALL_PRS_KEY = "/repos/audacitygit/pr-pilot/pulls?state=all"; 

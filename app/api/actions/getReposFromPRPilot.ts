@@ -1,20 +1,10 @@
-import prPilotApi from "@/app/api/axios/prpilotApi";
+import prPilotApi from "@/lib/api/prpilotApi";
 
 // ✅ Fetch repositories from PR Pilot API
 export async function getReposFromPRPilot(session) {
-    console.log({ session });
-
-    const isOrg = false;
-    const orgId = session?.org?.id || null
     const githubId = session.githubId;
-    console.log("Fetching repos for:", githubId);
-
     try {
-        const response = await prPilotApi.get("/user-repos", {
-            params: { orgId, isOrg, githubId },
-        });
-
-        console.log({ response });
+        const response = await prPilotApi.get(`/repos/${githubId}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching repos:", error);

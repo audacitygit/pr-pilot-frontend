@@ -1,7 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface RepoCardProps {
     repo: {
+        id: string,
         name: string;
         owner: { login: string; avatar_url: string; html_url: string };
         html_url: string;
@@ -12,12 +14,13 @@ interface RepoCardProps {
         open_issues_count: number;
         visibility: string;
         updated_at: string;
-    };
+    },
+
 }
 
 export default function RepoCard({ repo }: RepoCardProps) {
     return (
-        <div className="p-4 border border-gray-300 rounded-lg shadow-lg bg-white flex flex-col space-y-3">
+        <Link href={`/repos/${repo.id}`} className="p-4 border border-gray-300 rounded-lg shadow-lg bg-white flex flex-col space-y-3" >
             {/* Repo Header */}
             <div className="flex items-center space-x-3">
                 <Image
@@ -29,13 +32,12 @@ export default function RepoCard({ repo }: RepoCardProps) {
                 />
                 <div>
                     <h3 className="text-lg font-bold text-gray-900">{repo.name}</h3>
-                    <a
-                        href={repo.owner.html_url}
-                        target="_blank"
+                    <p
+
                         className="text-sm text-blue-600 hover:underline"
                     >
                         @{repo.owner.login}
-                    </a>
+                    </p>
                 </div>
             </div>
 
@@ -60,14 +62,7 @@ export default function RepoCard({ repo }: RepoCardProps) {
                 >
                     {repo.visibility.toUpperCase()}
                 </span>
-                <a
-                    href={repo.html_url}
-                    target="_blank"
-                    className="text-sm text-blue-600 hover:underline"
-                >
-                    View Repo →
-                </a>
             </div>
-        </div>
+        </Link>
     );
 }

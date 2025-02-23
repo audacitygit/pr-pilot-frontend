@@ -1,4 +1,4 @@
-import prPilotApi from "@/app/api/axios/prpilotApi";
+import prPilotApi from "@/lib/api/prpilotApi";
 
 // ✅ Uses `prPilotApi` instead of creating a new Axios instance
 export async function postReposToPRPilot(repositories, session) {

@@ -1,6 +1,6 @@
 
 import { postReposToPRPilot } from "@/app/api/actions/postRepoToPRPilot";
-import { useGithubSession } from "@/lib/queries/session/useGithubUserSession";
+import { useGithubSession } from "@/hooks/sessionHooks/useGithubUserSession";
 import { useState } from "react";
 
 export default function AddRepoModal({ onClose, gitRepos, userRepos }) {

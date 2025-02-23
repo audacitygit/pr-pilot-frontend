@@ -1,9 +1,10 @@
 "use client"
 
-import { BaseLayout } from "../components/BaseLayout";
+
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { Home, Folder, GitPullRequest, Settings } from "lucide-react";
+import { BaseLayout } from "@/components/BaseLayout";
 
 export default function DashboardLayout({ children }) {
     const pathname = usePathname()
@@ -49,7 +50,7 @@ export default function DashboardLayout({ children }) {
         {
             icon: <GitPullRequest size={20} />,
             label: "Pull Requests",
-            href: "/pulls",
+            href: "/pull-requests",
         },
         {
             icon: <Settings size={20} />,

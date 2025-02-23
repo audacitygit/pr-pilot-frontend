@@ -1,9 +1,10 @@
 "use client";
+
 import { ReactNode, useState } from "react";
-import { useTheme } from "../context/ThemeProvider";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from "@/app/context/ThemeProvider";
 
 interface BaseLayoutProps {
     logoSrc: string;

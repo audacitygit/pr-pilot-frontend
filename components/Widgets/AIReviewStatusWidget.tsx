@@ -1,6 +1,7 @@
-import WidgetCard from "@/app/components/Cards/WidgetCard";
+
 import { Brain } from "lucide-react";
 import PRBadge from "../Badges/PRBadget";
+import WidgetCard from "../Cards/WidgetCard";
 
 export default function AIReviewStatusWidget() {
     const pendingReviews = [

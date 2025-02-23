@@ -1,6 +1,6 @@
 "use client"
+import { useTheme } from "@/app/context/ThemeProvider";
 import React, { MouseEvent } from "react";
-import { useTheme } from "../context/ThemeProvider";
 
 interface ButtonProps {
     children: React.ReactNode;

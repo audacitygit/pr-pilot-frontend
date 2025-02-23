@@ -3,9 +3,9 @@
 import { ReactNode, useState, MouseEvent } from "react";
 import dayjs from "dayjs";
 import PRStateTag from "./PRStateTag";
-import { useTheme } from "../context/ThemeProvider";
 import Button from "./Button"; // Import the reusable Button component
 import Image from "next/image";
+import { useTheme } from "@/app/context/ThemeProvider";
 
 interface PRAccordionItemProps {
     children: ReactNode;

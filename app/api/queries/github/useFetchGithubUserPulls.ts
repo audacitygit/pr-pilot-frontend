@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { SWR_KEYS } from "../../../../lib/keys";
-import githubApi from "../../axios/githubApi";
+import githubApi from "../../../../lib/api/githubApi";
 
 const fetchGithubUserPulls = async (url: string) => {
     const { data } = await githubApi.get(url);

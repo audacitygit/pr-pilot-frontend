@@ -1,13 +1,17 @@
-import { Accordion } from "../../components/Accordion/Accordion";
-import { AIReviewCard } from "../../components/Cards/AiReviewCard";
-import { FileChangesCard } from "../../components/Cards/FileChangesCard";
-import { PRDetailsCard } from "../../components/Cards/PRDetailsCard";
-import PRAccordionItem from "../../components/PR_AccordionItem";
-import { PullRequest } from "../../../lib/types/pr";
+"use client"
+
+import { Accordion } from "@/components/Accordion/Accordion";
+import { PullRequest } from "../../../types/pr";
 import { categorizePRs } from "../../utils/helpers";
+import { useGithubSession } from "@/hooks/sessionHooks/useGithubUserSession";
+import PRRAccordionItem from "@/components/PR_AccordionItem";
+import { PRDetailsCard } from "@/components/Cards/PRDetailsCard";
+import { FileChangesCard } from "@/components/Cards/FileChangesCard";
+import { AIReviewCard } from "@/components/Cards/AiReviewCard";
 
-export default async function Pulls() {
-
+export default function Pulls() {
+    const { session } = useGithubSession()
+    console.log({ session })
     const pullRequests = []
     const { open, closed, merged } = categorizePRs(pullRequests);
 
@@ -24,7 +28,7 @@ export default async function Pulls() {
                         <h2 className="text-xl font-bold text-gray-900 mb-3">{title}</h2>
                         <Accordion>
                             {prs.map((pr: PullRequest) => (
-                                <PRAccordionItem
+                                <PRRAccordionItem
                                     prUrl={pr.html_url}
                                     key={pr.number}
                                     state={pr.state}
@@ -39,7 +43,7 @@ export default async function Pulls() {
                                     <PRDetailsCard pr={pr} />
                                     <FileChangesCard />
                                     <AIReviewCard />
-                                </PRAccordionItem>
+                                </PRRAccordionItem>
                             ))}
                         </Accordion>
                     </div>

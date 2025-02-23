@@ -1,6 +1,6 @@
 "use server";
 
-import githubApi from "../axios/githubApi";
+import githubApi from "../../../lib/api/githubApi";
 
 // ✅ Server-side function to fetch user repositories
 export async function fetchGithubUserRepos(username: string) {

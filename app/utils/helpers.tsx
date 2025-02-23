@@ -1,4 +1,4 @@
-import { PullRequest } from "../../lib/types/pr";
+import { PullRequest } from "../../types/pr";
 
 
 export function categorizePRs(prs: PullRequest[]) {

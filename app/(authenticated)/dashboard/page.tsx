@@ -1,8 +1,9 @@
 "use client";
 
-import WidgetCard from "@/app/components/Cards/WidgetCard";
-import ActivePullRequestsWidget from "@/app/components/Widgets/ActivePullRequestsWidget";
-import AIReviewStatusWidget from "@/app/components/Widgets/AIReviewStatusWidget";
+
+import WidgetCard from "@/components/Cards/WidgetCard";
+import ActivePullRequestsWidget from "@/components/Widgets/ActivePullRequestsWidget";
+import AIReviewStatusWidget from "@/components/Widgets/AIReviewStatusWidget";
 import { Folder, BarChart, Bell } from "lucide-react";
 
 export default function Dashboard() {

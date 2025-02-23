@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import axios from "axios";
-import { Session } from "@/lib/types/session"
+import { Session } from "@/types/session"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 

@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import RepoCard from "../../components/Cards/RepoCard";
-import AddRepoModal from "../../components/Modals/AddRepoModal";
-import { useGithubSession } from "@/lib/queries/session/useGithubUserSession";
+import { useGithubSession } from "@/hooks/sessionHooks/useGithubUserSession";
 
 import { fetchGithubUserRepos } from "@/app/api/actions/github";
 import { getReposFromPRPilot } from "@/app/api/actions/getReposFromPRPilot";
+import RepoCard from "@/components/Cards/RepoCard";
+import AddRepoModal from "@/components/Modals/AddRepoModal";
 
 export default function Repos() {
 
@@ -19,8 +19,10 @@ export default function Repos() {
     useEffect(() => {
         const getRepos = async () => {
             setLoading(true)
-            const { data } = await getReposFromPRPilot(session)
-            setRepos(data)
+            if (session) {
+                const { data } = await getReposFromPRPilot(session)
+                setRepos(data)
+            }
             setLoading(false)
         }
         getRepos()

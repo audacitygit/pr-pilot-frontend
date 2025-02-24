@@ -1,11 +1,11 @@
 
 import { postReposToPRPilot } from "@/app/api/actions/postRepoToPRPilot";
-import { useGithubSession } from "@/hooks/sessionHooks/useGithubUserSession";
+import { useSessionContext } from "@/context/SessionProvider";
 import { useState } from "react";
 
 export default function AddRepoModal({ onClose, gitRepos, userRepos }) {
     const [selectedRepos, setSelectedRepos] = useState([]);
-    const { session } = useGithubSession()
+    const session = useSessionContext()
     console.log({ gitRepos })
     // Handle repository selection
     const handleSelectRepo = (repo) => {

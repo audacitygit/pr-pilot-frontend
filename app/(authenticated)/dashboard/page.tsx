@@ -2,30 +2,17 @@
 
 
 import WidgetCard from "@/components/Cards/WidgetCard";
-import ActivePullRequestsWidget from "@/components/Widgets/ActivePullRequestsWidget";
+import ActivePullRequestsContainer from "@/components/Widgets/ActivePullRequests/Container";
 import AIReviewStatusWidget from "@/components/Widgets/AIReviewStatusWidget";
 import { Folder, BarChart, Bell } from "lucide-react";
 
 export default function Dashboard() {
-    const prsNeedingReview = [
-        { id: 11, repo: "pr-pilot-frontend" },
-        { id: 141, repo: "super-duper-long-repo-name" },
-        { id: 12, repo: "pr-pilot-frontend" },
-        { id: 144, repo: "super-duper-long-repo-name" },
-        { id: 13, repo: "pr-pilot-frontend" },
-        { id: 122, repo: "super-duper-long-repo-name" },
-    ];
-
-    const prsWaitingMerge = [
-        { id: 33, repo: "backend-service" },
-        { id: 92, repo: "database-migrations" }
-    ];
 
     return (
         <div className="p-8 space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {/* Active PRs Summary */}
-                <ActivePullRequestsWidget prsNeedingReview={prsNeedingReview} prsWaitingMerge={prsWaitingMerge} />
+                <ActivePullRequestsContainer />
 
                 {/* AI Review Status */}
                 <AIReviewStatusWidget />

@@ -1,6 +1,6 @@
-import prPilotApi from "@/lib/api/instances/prpilotApi";
+import PRPilotApiClient from "@/lib/api/clients/PRPilotApiClient";
 
-// ✅ Uses `prPilotApi` instead of creating a new Axios instance
+// ✅ Uses `PRPilotApiClient` instead of creating a new Axios instance
 export async function postReposToPRPilot(repositories, session) {
     console.log({ session })
     //TODO: is org likely isn't controlled by github, orgs are registered on the backend. Will have to play around with this
@@ -9,7 +9,7 @@ export async function postReposToPRPilot(repositories, session) {
     const githubId = session.githubId
     console.log(githubId, orgId)
     try {
-        const response = await prPilotApi.post("/repos", { repositories, githubId, orgId, isOrg });
+        const response = await PRPilotApiClient.post("/repos", { repositories, githubId, orgId, isOrg });
         console.log({ response })
         return response.data;
     } catch (error) {

@@ -4,6 +4,9 @@ import GitHubButton from "@/components/Buttons/GitHubButton";
 import { Suspense } from "react";
 
 export default function SignupPage() {
+
+
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-white p-6 text-gray-900">
             {/* Title */}

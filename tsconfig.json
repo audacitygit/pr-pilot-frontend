@@ -33,7 +33,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/(authenticated)/repos/[slug]"
+    "app/(authenticated)/repos/[slug]",
+    "lib/api/clients/PRPilotApiClientClient.ts"
   ],
   "exclude": [
     "node_modules"

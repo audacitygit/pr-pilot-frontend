@@ -7,34 +7,24 @@ import PRRAccordionItem from "@/components/PR_AccordionItem";
 import { PRDetailsCard } from "@/components/Cards/PRDetailsCard";
 import { FileChangesCard } from "@/components/Cards/FileChangesCard";
 import { AIReviewCard } from "@/components/Cards/AiReviewCard";
-import useFetchReposById from "@/hooks/pilotApi/queries/useFetchReposById";
-import useFetchPullRequests from "@/hooks/pilotApi/queries/useFetchPulls";
-import { useSessionContext } from "@/context/SessionProvider";
 import { useTheme } from "@/context/ThemeProvider"; // ✅ Import Theme Context
+import useFetchPulls from "@/hooks/swr/pulls/queries/useFetchUserPulls";
+
 
 export default function Pulls() {
-    // ✅ Fetch repositories first
-    const session = useSessionContext();
     const { theme } = useTheme(); // ✅ Get current theme
-    console.log({ session });
 
-    const { data, isLoading: repoLoading, error: repoError } = useFetchReposById(session);
-    console.log("datainpage", data);
-
-    // ✅ Extract repo IDs (if data is available)
-    const repoIds = data?.map(repo => repo.id) || [];
-    console.log("repoidsinpage", { repoIds });
 
     // ✅ Fetch all pull requests for these repo IDs
-    const { pulls: pullRequests, loading: prLoading, error: prError } = useFetchPullRequests(repoIds);
-    console.log({ pullRequests });
+    const { pulls, loading, error } = useFetchPulls();
+    console.log({ pulls });
 
     // ✅ Categorize PRs
-    const { open, closed, merged } = categorizePRs(pullRequests);
+    const { open, closed, merged } = categorizePRs(pulls);
 
     // ✅ Handle loading state
-    if (repoLoading || prLoading) return <p>Loading pull requests...</p>;
-    if (repoError || prError) return <p>Error fetching data.</p>;
+    if (loading) return <p>Loading pull requests...</p>;
+    if (error) return <p>Error fetching data.</p>;
 
     return (
         <div className="space-y-6">

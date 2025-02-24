@@ -2,19 +2,36 @@
 
 import { useRouter } from "next/navigation";
 import { icons, Loader2 } from "lucide-react";
-import { useGithubSession } from "@/hooks/sessionHooks/useGithubUserSession"; // ✅ Using our custom hook
-
-const API_BASE_URL = "https://pr-pilot-api.fly.dev";
+import { useEffect, useState } from "react";
+import PRPilotApiClient from "@/lib/api/clients/PRPilotApiClient";
 
 export default function GitHubButton() {
     const router = useRouter();
-    const { session, isLoading } = useGithubSession(); // ✅ Using SWR-based session fetching
+    const [loading, setLoading] = useState(false)
+    const [session, setSession] = useState(null)
 
-    const handleSignIn = () => {
-        window.location.href = `${API_BASE_URL}/api/auth/github/login`; // 🔹 Redirects for OAuth login
+    useEffect(() => {
+        const fetchSession = async () => {
+            try {
+                const { data } = await PRPilotApiClient.get("/auth/github/session");
+                console.log(data)
+                setSession(data);
+            } catch (err) {
+                console.error("Failed to fetch session:", err);
+
+            } finally {
+                console.log("done with fetch session")
+            }
+        };
+        fetchSession();
+    }, []);
+
+    const handleSignIn = async () => {
+        setLoading(true)
+        window.location.href = process.env.NEXT_PUBLIC_API_REDIRECT_URL
     };
 
-    if (isLoading) {
+    if (loading) {
         return (
             <button
                 disabled

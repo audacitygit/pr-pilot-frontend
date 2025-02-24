@@ -1,42 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useGithubSession } from "@/hooks/sessionHooks/useGithubUserSession";
-
-import { fetchGithubUserRepos } from "@/app/api/actions/github";
-import { getReposFromPRPilot } from "@/app/api/actions/getReposFromPRPilot";
+import { useState } from "react";
 import RepoCard from "@/components/Cards/RepoCard";
 import AddRepoModal from "@/components/Modals/AddRepoModal";
+import useFetchUserRepos from "@/hooks/swr/repos/queries/useFetchUserRepos";
+
+
 
 export default function Repos() {
 
-    const [repos, setRepos] = useState([]);
-    const [gitRepos, setGitRepos] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const { session } = useGithubSession()
 
-    useEffect(() => {
-        const getRepos = async () => {
-            setLoading(true)
-            if (session) {
-                const data = await getReposFromPRPilot(session)
-                console.log({ data })
-                setRepos(data.repositories)
-            }
-            setLoading(false)
-        }
-        getRepos()
-    }, [session])
+    const [gitRepos, setGitRepos] = useState([]);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const { repos, loading, error } = useFetchUserRepos()
 
     const handleConnectRepoClick = async () => {
         setIsModalOpen(true);
-        const data = await fetchGithubUserRepos(session.username)
-        setGitRepos(data)
+        // TODO: setup githubapi proxy routes
+        // const data = await fetchGithubUserRepos(session.username)
+        setGitRepos([])
     };
 
     return (
         <div className="space-y-6 p-6">
+            {error && (
+                <div>error loading repos</div>
+            )}
             {loading ? (
                 <p>Loading repositories...</p>
             ) : repos?.length === 0 ? (

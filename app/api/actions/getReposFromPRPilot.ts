@@ -1,10 +1,10 @@
-import prPilotApi from "@/lib/api/instances/prpilotApi";
+import PRPilotApiClient from "@/lib/api/clients/PRPilotApiClient";
 
 // ✅ Fetch repositories from PR Pilot API
-export async function getReposFromPRPilot(session) {
-    const githubId = session.githubId;
+export async function getReposFromPRPilot(githubId) {
+
     try {
-        const { data } = await prPilotApi.get(`/repos/${githubId}`);
+        const { data } = await PRPilotApiClient.get(`/repos/${githubId}`);
 
         return data
     } catch (error) {

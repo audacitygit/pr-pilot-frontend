@@ -8,7 +8,6 @@ import { GitPullRequest } from "lucide-react";
 
 export default function ActivePullRequestsContainer() {
     const { pulls, loading, error } = useFetchUserCategorizedPulls()
-    console.log("pulls here container", { pulls })
 
     if (loading) return <LoadingWidgetCard title="Active Pull Requests" icon={GitPullRequest} />
     if (error) return <p className="text-red-500">Error loading PRs.</p>;

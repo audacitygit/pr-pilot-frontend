@@ -1,6 +1,8 @@
 export type PullRequest = {
+    updated_at: string
+    id: string | number,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    base: any
+    base: any,
     state: string,
     reviewed: boolean,
     title: string,

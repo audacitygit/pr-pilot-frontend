@@ -2,14 +2,17 @@ import { fetchPullRequestByNumber } from "@/lib/api/fetchers/pulls/fetchUserPull
 import useSWR from "swr";
 
 
-export default function useFetchPullByNumber(repo: string, pullNumber: number) {
+export default function useFetchPullByNumber(repo: string, pullNumber: string) {
     const { data, error } = useSWR(
-        repo && pullNumber ? `/api/github/pulls/user/${repo}/${pullNumber}` : null,
+        repo && pullNumber ? `/github/pulls/user/${repo}/${pullNumber}` : null,
         () => fetchPullRequestByNumber(repo, pullNumber)
     );
 
+    console.log("data in fetcher", { data })
+
     return {
-        pullRequest: data || null,
+        pullRequest: data?.pullRequest || null,
+        diff: data?.diff,
         loading: !data && !error,
         error,
     };

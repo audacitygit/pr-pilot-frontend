@@ -8,13 +8,10 @@ import useFetchUserRepos from "@/hooks/swr/repos/queries/useFetchUserRepos";
 
 
 export default function Repos() {
-
-
     const [gitRepos, setGitRepos] = useState([]);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const { repos, loading, error } = useFetchUserRepos()
+    console.log({ repos })
 
     const handleConnectRepoClick = async () => {
         setIsModalOpen(true);

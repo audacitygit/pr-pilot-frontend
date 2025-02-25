@@ -2,13 +2,13 @@
 
 import { Accordion } from "@/components/Accordion/Accordion";
 import { PullRequest } from "../../../types/pr";
-import { categorizePRs } from "../../utils/helpers";
+import { categorizePRs } from "../../../utils/helpers";
 import PRRAccordionItem from "@/components/PR_AccordionItem";
 import { PRDetailsCard } from "@/components/Cards/PRDetailsCard";
 import { FileChangesCard } from "@/components/Cards/FileChangesCard";
 import { AIReviewCard } from "@/components/Cards/AiReviewCard";
 import { useTheme } from "@/context/ThemeProvider"; // ✅ Import Theme Context
-import useFetchPulls from "@/hooks/swr/pulls/queries/useFetchUserPulls";
+import useFetchUserPulls from "@/hooks/swr/pulls/queries/useFetchUserPulls";
 
 
 export default function Pulls() {
@@ -16,7 +16,7 @@ export default function Pulls() {
 
 
     // ✅ Fetch all pull requests for these repo IDs
-    const { pulls, loading, error } = useFetchPulls();
+    const { pulls, loading, error } = useFetchUserPulls()
     console.log({ pulls });
 
     // ✅ Categorize PRs
@@ -48,7 +48,7 @@ export default function Pulls() {
                             {prs.map((pr: PullRequest) => (
                                 <PRRAccordionItem
                                     prUrl={pr.html_url}
-                                    key={pr.number}
+                                    key={pr.id}
                                     state={pr.state}
                                     reviewed={pr.state !== "open"}
                                     title={pr.title}

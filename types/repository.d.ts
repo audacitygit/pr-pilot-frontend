@@ -4,6 +4,16 @@ export type Repository = {
     name?: string;
     full_name?: string;
     private?: boolean;
+    base: {
+        label: string,
+        ref: string,
+        repo: {
+            id: number,
+            node_id: string,
+            name: string,
+            full_name: string,
+        }
+    },
     owner: {
         login: string; // ✅ Required (GitHub username)
         id?: number;

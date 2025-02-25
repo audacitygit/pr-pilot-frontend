@@ -2,6 +2,7 @@
 import { Brain } from "lucide-react";
 import PRBadge from "../Badges/PRBadge";
 import WidgetCard from "../Cards/WidgetCard";
+import { Repository } from "@/types/repository";
 
 export default function AIReviewStatusWidget() {
     const pendingReviews = [
@@ -25,7 +26,7 @@ export default function AIReviewStatusWidget() {
                     <h3 className="text-md font-semibold text-gray-800 mb-2">Pending: {pendingReviews.length}</h3>
                     <div className="bg-gray-100 p-3 rounded-lg flex flex-col gap-1 w-full h-full overflow-hidden">
                         {pendingReviews.map((pr) => (
-                            <PRBadge title={"test"} id={pr.id} key={pr.id} />
+                            <PRBadge title={"test"} id={pr.id} key={pr.id} pr={{} as Repository} />
                         ))}
                     </div>
                 </div>
@@ -35,7 +36,7 @@ export default function AIReviewStatusWidget() {
                     <h3 className="text-md font-semibold text-gray-800 mb-2">Reviewed: {reviewedPRs.length}</h3>
                     <div className="bg-gray-100 p-3 rounded-lg flex flex-col gap-1 w-full h-full overflow-hidden">
                         {reviewedPRs.slice(0, 4).map((pr) => (
-                            <PRBadge title={"test"} id={pr.id} key={pr.id} />
+                            <PRBadge title={"test"} id={pr.id} key={pr.id} pr={{} as Repository} />
                         ))}
                         {reviewedPRs.length > 4 && (
                             <a href="/pulls" className="text-blue-600 font-medium mt-2 text-center block">

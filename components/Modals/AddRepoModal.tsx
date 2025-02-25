@@ -1,12 +1,7 @@
-
-import { postReposToPRPilot } from "@/app/api/actions/postRepoToPRPilot";
-import { useSessionContext } from "@/context/SessionProvider";
 import { useState } from "react";
 
 export default function AddRepoModal({ onClose, gitRepos, userRepos }) {
     const [selectedRepos, setSelectedRepos] = useState([]);
-    const session = useSessionContext()
-    console.log({ gitRepos })
     // Handle repository selection
     const handleSelectRepo = (repo) => {
         if (!selectedRepos.find((r) => r.id === repo.id)) {
@@ -20,11 +15,6 @@ export default function AddRepoModal({ onClose, gitRepos, userRepos }) {
     };
 
     const handleAddRepos = async () => {
-        const response = await postReposToPRPilot(selectedRepos, session)
-        //TODO: toast here, use loading state
-        if (response.ok || response) {
-            onClose()
-        }
     }
 
     // Get available repos that haven't been selected

@@ -48,7 +48,6 @@ export default function Pulls() {
                             {prs.map((pr: PullRequest) => (
                                 <PRRAccordionItem
                                     id={pr.number}
-                                    prUrl={pr.html_url}
                                     key={pr.id}
                                     state={pr.state}
                                     reviewed={pr.state !== "open"}

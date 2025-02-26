@@ -7,7 +7,8 @@ import Button from "./Button";
 import Image from "next/image";
 import { useTheme } from "@/context/ThemeProvider";
 import { useRouter } from "next/navigation";
-
+import useTriggerAIReview from "@/hooks/swr/ai/useTriggerAIReview";
+import { BrainCircuit } from "lucide-react";
 
 interface PRAccordionItemProps {
     children: ReactNode;
@@ -19,7 +20,6 @@ interface PRAccordionItemProps {
     userAvatarUrl: string;
     closed_on?: string;
     merged_at?: string;
-    prUrl: string;
     base_repo_name: string;
     id: string | number;
 }
@@ -39,14 +39,26 @@ export default function PRRAccordionItem({
 }: PRAccordionItemProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { theme } = useTheme();
-    const router = useRouter()
+    const router = useRouter();
     const formattedCreatedAt = dayjs(created_at).format("MMM DD, YYYY - hh:mm A");
     const formattedClosedOn = closed_on ? dayjs(closed_on).format("MMM DD, YYYY - hh:mm A") : null;
 
+    const { triggerAIReview, isLoading } = useTriggerAIReview();
+
     const handleViewPrClick = (e: MouseEvent) => {
         e.stopPropagation();
-        router.push(`/repos/${base_repo_name}/pulls/${id}`)
+        router.push(`/repos/${base_repo_name}/pulls/${id}`);
     };
+
+    const handleAIReview = async (e: MouseEvent) => {
+        e.stopPropagation();
+        try {
+            await triggerAIReview(base_repo_name, Number(id)); // ✅ Pass arguments directly
+        } catch (error) {
+            console.error("Error triggering AI review:", error);
+        }
+    };
+
 
     return (
         <div className={`w-full rounded-lg shadow-md overflow-hidden mb-4 transition-all
@@ -83,13 +95,14 @@ export default function PRRAccordionItem({
                     </div>
 
                     {/* View PR Button */}
-                    <Button variant="tertiary" onClick={(e) => handleViewPrClick(e)}>
+                    <Button variant="tertiary" onClick={handleViewPrClick}>
                         View PR
                     </Button>
 
                     {/* AI Review Button */}
-                    <Button variant="primary" disabled={reviewed}>
-                        {reviewed ? "Review Complete" : "Start AI-Review"}
+                    <Button variant="primary" onClick={handleAIReview} disabled={reviewed || isLoading}>
+                        <BrainCircuit className="w-4 h-4" />
+                        {isLoading ? "Requesting AI Review..." : reviewed ? "Review Complete" : "Start AI-Review"}
                     </Button>
                 </div>
             </div>

@@ -76,6 +76,29 @@ export const extractNewValue = (diff: string) => {
         .join("\n");
 };
 
+export const parseDiffByFile = (diff: string) => {
+    const files: Record<string, { oldValue: string[]; newValue: string[] }> = {};
+    let currentFile = "";
+
+    diff.split("\n").forEach((line) => {
+        // ✅ Detect new file section in diff
+        if (line.startsWith("diff --git a/")) {
+            currentFile = line.split(" ")[2].replace("a/", ""); // Extract filename
+            files[currentFile] = { oldValue: [], newValue: [] };
+        } else if (currentFile) {
+            // ✅ Categorize lines based on additions/removals
+            if (line.startsWith("-") && !line.startsWith("---")) {
+                files[currentFile].oldValue.push(line.substring(1));
+            } else if (line.startsWith("+") && !line.startsWith("+++")) {
+                files[currentFile].newValue.push(line.substring(1));
+            }
+        }
+    });
+
+    return files;
+};
+
+
 
 // TODO: fix notifications
 /* export const extractPRNotifications = (pullRequests: PullRequest[]) => {

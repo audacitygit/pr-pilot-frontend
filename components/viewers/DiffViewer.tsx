@@ -1,7 +1,7 @@
 "use client";
 
-import { extractNewValue, extractOldValue } from "@/utils/helpers";
-import ReactDiffViewer, { DiffMethod } from "react-diff-viewer";
+import { parseDiffByFile } from "@/utils/helpers";
+import DiffAccordion from "../Accordion/DiffAccordion";
 
 interface DiffViewerProps {
     diff: string;
@@ -10,18 +10,13 @@ interface DiffViewerProps {
 export default function DiffViewer({ diff }: DiffViewerProps) {
     if (!diff) return <p className="text-gray-500">No diff available.</p>;
 
+    const fileDiffs = parseDiffByFile(diff);
+
     return (
-        <div className="w-full h-[33vh] overflow-y-auto border border-gray-300 rounded-lg bg-gray-100 p-4">
-            <ReactDiffViewer
-                oldValue={extractOldValue(diff)}
-                newValue={extractNewValue(diff)}
-                splitView={true} // ✅ Show side-by-side diffs
-                compareMethod={DiffMethod.WORDS}
-                styles={{
-                    variables: { light: { diffViewerBackground: "#f8f9fa" } },
-                    line: { padding: "5px 10px" },
-                }}
-            />
+        <div className="w-full max-h-[50vh] overflow-y-auto rounded-lg bg-gray-100 p-4 bg-white">
+            {Object.entries(fileDiffs).map(([filename, { oldValue, newValue }]) => (
+                <DiffAccordion key={filename} filename={filename} oldValue={oldValue.join("\n")} newValue={newValue.join("\n")} />
+            ))}
         </div>
     );
 }

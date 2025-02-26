@@ -5,7 +5,7 @@ export default function useFetchUserRepos() {
     const { data, error } = useSWR("/api/github/repos/user", fetchUserRepos);
     console.log("data in hook", data)
     return {
-        repos: data || [],
+        repos: data ?? [],
         loading: !data && !error,
         error,
     };

@@ -6,6 +6,8 @@ import PRStateTag from "./PRStateTag";
 import Button from "./Button";
 import Image from "next/image";
 import { useTheme } from "@/context/ThemeProvider";
+import { useRouter } from "next/navigation";
+
 
 interface PRAccordionItemProps {
     children: ReactNode;
@@ -19,6 +21,7 @@ interface PRAccordionItemProps {
     merged_at?: string;
     prUrl: string;
     base_repo_name: string;
+    id: string | number;
 }
 
 export default function PRRAccordionItem({
@@ -31,17 +34,18 @@ export default function PRRAccordionItem({
     userAvatarUrl = "/logo.png",
     closed_on,
     merged_at,
-    prUrl,
     base_repo_name,
+    id
 }: PRAccordionItemProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { theme } = useTheme();
+    const router = useRouter()
     const formattedCreatedAt = dayjs(created_at).format("MMM DD, YYYY - hh:mm A");
     const formattedClosedOn = closed_on ? dayjs(closed_on).format("MMM DD, YYYY - hh:mm A") : null;
 
     const handleViewPrClick = (e: MouseEvent) => {
         e.stopPropagation();
-        window.open(prUrl, "_blank");
+        router.push(`/repos/${base_repo_name}/pulls/${id}`)
     };
 
     return (

@@ -3,7 +3,7 @@ import useSWR from "swr";
 
 
 export default function useFetchUserPulls() {
-    const { data, error } = useSWR("/github/pulls/user", fetchUserPullRequests);
+    const { data, error } = useSWR("/github/pulls/user/repos/:id", fetchUserPullRequests);
 
     return {
         pulls: data?.pullRequests || [],
@@ -11,3 +11,5 @@ export default function useFetchUserPulls() {
         error,
     };
 }
+
+

@@ -1,18 +1,21 @@
-import type { Config } from "tailwindcss";
-
-export default {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: "class", // ✅ Enables dark mode styling
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
+      boxShadow: {
+        neon: "0px 0px 12px rgba(0, 255, 255, 0.6)", // ✅ Custom shadow for a neon glow
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        neonBlue: "#00ffff",
       },
     },
   },
-  plugins: [],
-} satisfies Config;
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  plugins: [require("@tailwindcss/typography")],
+};

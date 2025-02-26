@@ -1,7 +1,4 @@
-
-
-
-import { fetchTriggerAIReview } from "@/lib/api/fetchers/ai/fetchTriggerAiReview";
+import { fetchTriggerAIReview } from "@/lib/api/fetchers/ai/fetchTriggerAIReview";
 import useSWRMutation from "swr/mutation";
 
 

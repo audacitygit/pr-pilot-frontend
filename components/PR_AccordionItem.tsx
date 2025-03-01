@@ -39,6 +39,7 @@ export default function PRRAccordionItem({
 }: PRAccordionItemProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { theme } = useTheme();
+
     const router = useRouter();
     const formattedCreatedAt = dayjs(created_at).format("MMM DD, YYYY - hh:mm A");
     const formattedClosedOn = closed_on ? dayjs(closed_on).format("MMM DD, YYYY - hh:mm A") : null;

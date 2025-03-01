@@ -1,7 +1,11 @@
+import useFetchUserGitRepos from "@/hooks/swr/repos/queries/useFetchUserGitRepos";
 import { useState } from "react";
 
-export default function AddRepoModal({ onClose, gitRepos, userRepos }) {
+export default function AddRepoModal({ onClose, userRepos }) {
     const [selectedRepos, setSelectedRepos] = useState([]);
+
+    const { repos, loading, error } = useFetchUserGitRepos()
+    console.log("REPOS IN MODAL", repos, loading, error)
     // Handle repository selection
     const handleSelectRepo = (repo) => {
         if (!selectedRepos.find((r) => r.id === repo.id)) {
@@ -18,7 +22,7 @@ export default function AddRepoModal({ onClose, gitRepos, userRepos }) {
     }
 
     // Get available repos that haven't been selected
-    const availableRepos = gitRepos.filter((repo) => ![...selectedRepos, ...userRepos].some((r) => r.id === repo.id));
+    const availableRepos = repos.filter((repo) => ![...selectedRepos, ...userRepos].some((r) => r.id === repo.id));
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

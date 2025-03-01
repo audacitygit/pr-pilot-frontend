@@ -5,19 +5,12 @@ import RepoCard from "@/components/Cards/RepoCard";
 import AddRepoModal from "@/components/Modals/AddRepoModal";
 import useFetchUserRepos from "@/hooks/swr/repos/queries/useFetchUserRepos";
 
-
-
 export default function Repos() {
-    const [gitRepos, setGitRepos] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { repos, loading, error } = useFetchUserRepos()
-    console.log({ repos })
 
     const handleConnectRepoClick = async () => {
         setIsModalOpen(true);
-        // TODO: setup githubapi proxy routes
-        // const data = await fetchGithubUserRepos(session.username)
-        setGitRepos([])
     };
 
     return (
@@ -53,7 +46,7 @@ export default function Repos() {
 
             {/* Modal for Connecting Repositories */}
             {isModalOpen && (
-                <AddRepoModal onClose={() => setIsModalOpen(false)} gitRepos={gitRepos} userRepos={repos} />
+                <AddRepoModal onClose={() => setIsModalOpen(false)} userRepos={repos} />
             )}
         </div>
     );

@@ -120,3 +120,8 @@ export type AddRepositoriesResponse = {
     message: string;
     repositories: Repository[];
 }
+
+export type RemoveRepositoryResponse = {
+    message: string;
+    repositories: Repository
+}

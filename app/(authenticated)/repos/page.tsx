@@ -37,7 +37,7 @@ export default function Repos() {
                     ))}
                     <button
                         onClick={handleConnectRepoClick}
-                        className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-500 transition"
+                        className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-500 transition min-h-44"
                     >
                         Connect a Repository
                     </button>
@@ -46,7 +46,7 @@ export default function Repos() {
 
             {/* Modal for Connecting Repositories */}
             {isModalOpen && (
-                <AddRepoModal onClose={() => setIsModalOpen(false)} userRepos={repos} />
+                <AddRepoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} userRepos={repos} />
             )}
         </div>
     );

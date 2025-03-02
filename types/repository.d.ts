@@ -115,3 +115,8 @@ export type Repository = {
         pull?: boolean;
     };
 }
+
+export type AddRepositoriesResponse = {
+    message: string;
+    repositories: Repository[];
+}

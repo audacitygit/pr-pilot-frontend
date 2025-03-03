@@ -69,7 +69,7 @@ export default function SingleRepoPullrequestSlugPage() {
                                     merged_at={pr.merged_at}
                                     base_repo_name={pr.base.repo.name}
                                 >
-                                    <PRDetailsCard pr={pr} />
+                                    <PRDetailsCard pr={pr} repoName={pr.base.repo.name} />
                                     <FileChangesCard />
                                     <AIReviewCard />
                                 </PRRAccordionItem>

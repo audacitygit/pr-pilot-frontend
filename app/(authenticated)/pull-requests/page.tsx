@@ -54,7 +54,7 @@ export default function Pulls() {
                                     base_repo_name={pr.base.repo.name}
                                 >
                                     <PRDetailsCard pr={pr} repoName={pr.base.repo.name} />
-                                    <FileChangesCard />
+                                    <FileChangesCard number={pr.number} repoName={pr.base.repo.name} />
                                     <AIReviewCard />
                                 </PRRAccordionItem>
                             ))}

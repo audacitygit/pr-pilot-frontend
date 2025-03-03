@@ -63,7 +63,7 @@ export default function RepoCard({ repo }: RepoCardProps) {
                     <span>⭐ {repo.stargazers_count}</span>
                     <span>🍴 {repo.forks_count}</span>
                     {repo.language && <span>💻 {repo.language}</span>}
-                    <span>🛑 {repo.open_issues_count} Issues</span>
+                    <span>🟢 {repo.open_issues_count} PR open</span>
                 </div>
 
                 {/* Repo Footer */}

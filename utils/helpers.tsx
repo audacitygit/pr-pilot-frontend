@@ -98,6 +98,39 @@ export const parseDiffByFile = (diff: string) => {
     return files;
 };
 
+export const parseDiffForCards = (diff: string) => {
+    const files: Record<string, { insertions: number; deletions: number }> = {};
+    let currentFile = "";
+
+    diff.split("\n").forEach((line) => {
+        // ✅ Detect new file section in diff
+        if (line.startsWith("diff --git a/")) {
+            currentFile = line.split(" ")[2].replace("a/", ""); // Extract filename
+            files[currentFile] = { insertions: 0, deletions: 0 };
+        } else if (currentFile) {
+            // ✅ Categorize lines based on additions/removals
+            if (line.startsWith("-") && !line.startsWith("---")) {
+                files[currentFile].deletions += 1;
+            } else if (line.startsWith("+") && !line.startsWith("+++")) {
+                files[currentFile].insertions += 1;
+            }
+        }
+    });
+
+    return Object.entries(files).map(([filename, changes]) => ({
+        filename,
+        insertions: changes.insertions,
+        deletions: changes.deletions,
+    }));
+};
+
+export const getPRAge = (createdAt: string) => {
+    const createdDate = new Date(createdAt);
+    const today = new Date();
+    const diffTime = Math.abs(today.getTime() - createdDate.getTime());
+    return Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Convert ms → days
+};
+
 
 
 // TODO: fix notifications

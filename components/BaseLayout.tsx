@@ -12,7 +12,9 @@ interface BaseLayoutProps {
     headerTitle?: string;
     headerSubtitle?: string;
     menuItems: { label: string; href?: string; onClick?: () => void }[];
-    sideNavItems: { icon: ReactNode; label: string; href?: string; onClick?: () => void }[];
+    sideNavItems: {
+        isLink?: boolean; icon: ReactNode; label: string; href?: string; onClick?: () => void
+    }[];
     userProfile: { name: string; avatarUrl: string };
     children: ReactNode;
 }
@@ -21,13 +23,11 @@ export function BaseLayout({
     logoSrc,
     headerTitle = "Dashboard",
     headerSubtitle = "Manage your pull requests",
-    menuItems,
     sideNavItems,
-    userProfile,
     children
 }: BaseLayoutProps) {
     const [sidebarOpen, setSidebarOpen] = useState(true);
-    const [menuOpen, setMenuOpen] = useState(false);
+
     const { theme, toggleTheme } = useTheme();
     const pathname = usePathname();
 
@@ -48,24 +48,6 @@ export function BaseLayout({
                     <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
                         {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
                     </button>
-
-                    {/* User Profile Dropdown */}
-                    <div className="relative">
-                        <button onClick={() => setMenuOpen(!menuOpen)} className="flex items-center space-x-2">
-                            <Image unoptimized={true} height={20} width={20} src={userProfile.avatarUrl} alt="User Avatar" className="h-8 w-8 rounded-full shadow-md" />
-                            <span className="hidden sm:inline font-semibold">{userProfile.name}</span>
-                        </button>
-
-                        {menuOpen && (
-                            <div className={`absolute right-0 mt-2 w-48 rounded-lg shadow-lg z-50 ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
-                                {menuItems.map((item, index) => (
-                                    <button key={index} onClick={item.onClick} className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                        {item.label}
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
                 </div>
             </header>
 
@@ -83,22 +65,35 @@ export function BaseLayout({
                         <nav className="flex-1 px-2 py-4 space-y-2">
                             {sideNavItems.map((item, index) => {
                                 const isActive = pathname.startsWith(item.href || ""); // ✅ Handles nested routes
-
+                                if (item.isLink) {
+                                    return (
+                                        <Link
+                                            key={index}
+                                            href={item.href || "#"}
+                                            className={`flex items-center space-x-3 px-4 py-2 w-full rounded-lg transition-colors ${isActive
+                                                ? "bg-blue-600 text-white font-semibold shadow-md"
+                                                : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                }`}
+                                        >
+                                            {item.icon}
+                                            {sidebarOpen && <span>{item.label}</span>}
+                                        </Link>
+                                    );
+                                }
                                 return (
-                                    <Link
+                                    <button
+                                        onClick={item.onClick}
                                         key={index}
-                                        href={item.href || "#"}
-                                        className={`flex items-center space-x-3 px-4 py-2 w-full rounded-lg transition-colors ${isActive
-                                            ? "bg-blue-600 text-white font-semibold shadow-md"
-                                            : "hover:bg-gray-100 dark:hover:bg-gray-700"
-                                            }`}
+                                        className={`flex items-center space-x-3 px-4 py-2 w-full rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700`}
                                     >
                                         {item.icon}
                                         {sidebarOpen && <span>{item.label}</span>}
-                                    </Link>
+                                    </button>
                                 );
+
                             })}
                         </nav>
+
                     </div>
                 </aside>
 

@@ -13,9 +13,9 @@ export default function GitHubButton() {
     useEffect(() => {
         const fetchSession = async () => {
             try {
-                const { data } = await PRPilotApiClient.get("/auth/github/session");
-                console.log(data)
-                setSession(data);
+                const { data } = await PRPilotApiClient.get("/auth/github/status");
+
+                setSession(data.activeSession);
             } catch (err) {
                 console.error("Failed to fetch session:", err);
 

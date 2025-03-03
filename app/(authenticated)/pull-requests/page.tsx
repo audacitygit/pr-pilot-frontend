@@ -12,14 +12,8 @@ import useFetchUserPulls from "@/hooks/swr/pulls/queries/useFetchUserPulls";
 
 
 export default function Pulls() {
-    const { theme } = useTheme(); // ✅ Get current theme
-
-
-    // ✅ Fetch all pull requests for these repo IDs
+    const { theme } = useTheme();
     const { pulls, loading, error } = useFetchUserPulls()
-    console.log({ pulls });
-
-    // ✅ Categorize PRs
     const { open, closed, merged } = categorizePRs(pulls);
 
     // ✅ Handle loading state
@@ -59,7 +53,7 @@ export default function Pulls() {
                                     merged_at={pr.merged_at}
                                     base_repo_name={pr.base.repo.name}
                                 >
-                                    <PRDetailsCard pr={pr} />
+                                    <PRDetailsCard pr={pr} repoName={pr.base.repo.name} />
                                     <FileChangesCard />
                                     <AIReviewCard />
                                 </PRRAccordionItem>

@@ -13,6 +13,7 @@ export default function useFetchPullByNumber(repo: string, pullNumber: string) {
     return {
         pullRequest: data?.pullRequest || null,
         diff: data?.diff,
+        reviews: data?.reviews,
         loading: !data && !error,
         error,
     };

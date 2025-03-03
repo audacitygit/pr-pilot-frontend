@@ -5,7 +5,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center bg-gray-50 px-6">
       {/* Logo */}
-      <Image src="/logo.png" alt="PR Pilot Logo" width={120} height={120} className="mb-6" />
+      <Image unoptimized={true} src="/logo.png" alt="PR Pilot Logo" width={120} height={120} className="mb-6" />
 
       {/* Hero Section */}
       <h1 className="text-5xl font-bold text-gray-900">Manage Your Pull Requests with AI</h1>

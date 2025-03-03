@@ -91,7 +91,7 @@ export default function PRRAccordionItem({
                 <div className="flex flex-wrap justify-between items-center gap-2">
                     {/* User Info */}
                     <div className="flex items-center gap-2">
-                        <Image height={20} width={20} alt="avatar" src={userAvatarUrl} className={`h-6 w-6 rounded-full border ${theme === "dark" ? "border-gray-600" : "border-gray-300"}`} />
+                        <Image unoptimized={true} height={20} width={20} alt="avatar" src={userAvatarUrl} className={`h-6 w-6 rounded-full border ${theme === "dark" ? "border-gray-600" : "border-gray-300"}`} />
                         <p className="text-xs sm:text-sm">{user}</p>
                     </div>
 

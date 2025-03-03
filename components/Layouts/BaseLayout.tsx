@@ -36,7 +36,7 @@ export function BaseLayout({
                     <button className="lg:hidden p-2" onClick={() => setSidebarOpen(!sidebarOpen)}>
                         {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
-                    <Image height={20} width={20} src={logoSrc} alt="Company Logo" className="h-10 w-10" />
+                    <Image unoptimized={true} height={20} width={20} src={logoSrc} alt="Company Logo" className="h-10 w-10" />
                     <div>
                         <h1 className="text-lg sm:text-xl font-bold">{headerTitle}</h1>
                         <p className="text-xs sm:text-sm">{headerSubtitle}</p>
@@ -53,7 +53,7 @@ export function BaseLayout({
                     {/* User Profile Dropdown */}
                     <div className="relative">
                         <button onClick={() => setMenuOpen(!menuOpen)} className="flex items-center space-x-2">
-                            <Image height={20} width={20} src={userProfile.avatarUrl} alt="User Avatar" className="h-8 w-8 rounded-full shadow-md" />
+                            <Image unoptimized={true} height={20} width={20} src={userProfile.avatarUrl} alt="User Avatar" className="h-8 w-8 rounded-full shadow-md" />
                             <span className="hidden sm:inline font-semibold">{userProfile.name}</span>
                         </button>
 

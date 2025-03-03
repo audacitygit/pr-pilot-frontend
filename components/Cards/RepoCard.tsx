@@ -40,7 +40,7 @@ export default function RepoCard({ repo }: RepoCardProps) {
 
                 {/* Repo Header */}
                 <Link href={`/repos/${repo.id}`} className="flex items-center space-x-3">
-                    <Image
+                    <Image unoptimized={true}
                         src={repo.owner.avatar_url}
                         alt="Owner Avatar"
                         width={40}

@@ -36,7 +36,7 @@ export function BaseLayout({
             {/* 🔹 Top Navigation */}
             <header className={`flex justify-between items-center shadow-md px-6 py-3 border-b ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
                 <div className="flex items-center space-x-4">
-                    <Image height={20} width={20} src={logoSrc} alt="Company Logo" className="h-10 w-10" />
+                    <Image unoptimized={true} height={20} width={20} src={logoSrc} alt="Company Logo" className="h-10 w-10" />
                     <div>
                         <h1 className="text-lg sm:text-xl font-bold">{headerTitle}</h1>
                         <p className="text-xs sm:text-sm">{headerSubtitle}</p>
@@ -52,7 +52,7 @@ export function BaseLayout({
                     {/* User Profile Dropdown */}
                     <div className="relative">
                         <button onClick={() => setMenuOpen(!menuOpen)} className="flex items-center space-x-2">
-                            <Image height={20} width={20} src={userProfile.avatarUrl} alt="User Avatar" className="h-8 w-8 rounded-full shadow-md" />
+                            <Image unoptimized={true} height={20} width={20} src={userProfile.avatarUrl} alt="User Avatar" className="h-8 w-8 rounded-full shadow-md" />
                             <span className="hidden sm:inline font-semibold">{userProfile.name}</span>
                         </button>
 
@@ -89,8 +89,8 @@ export function BaseLayout({
                                         key={index}
                                         href={item.href || "#"}
                                         className={`flex items-center space-x-3 px-4 py-2 w-full rounded-lg transition-colors ${isActive
-                                                ? "bg-blue-600 text-white font-semibold shadow-md"
-                                                : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                                            ? "bg-blue-600 text-white font-semibold shadow-md"
+                                            : "hover:bg-gray-100 dark:hover:bg-gray-700"
                                             }`}
                                     >
                                         {item.icon}

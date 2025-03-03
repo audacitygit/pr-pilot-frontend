@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "docker-build": "docker build -t pr-pilot-next .",
-    "docker-run": "docker run -p 3000:3000 pr-pilot-next"
+    "docker-run": "docker run -p 3000:3000 pr-pilot-next",
+    "deploy": "flyctl deploy --dockerfile Dockerfile"
   },
   "dependencies": {
     "@next-auth/mongodb-adapter": "^1.1.3",

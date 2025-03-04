@@ -1,6 +1,7 @@
 "use client";
 
 import ActivePullRequestsContainer from "@/components/Widgets/ActivePullRequests/Container";
+/* import AIReviewStatusWidget from "@/components/Widgets/AIReviewStatusWidget"; */
 import InsightsAnalyticsContainer from "@/components/Widgets/InsightsAnalytics/Container";
 import RepositoryOverviewContainer from "@/components/Widgets/RepositoryOverview/Container";
 
@@ -12,7 +13,7 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <ActivePullRequestsContainer />
                 {/* AI Review Status */}
-                {/* <AIReviewStatusWidget /> */}
+                {/*                 <AIReviewStatusWidget /> */}
                 <RepositoryOverviewContainer />
                 <InsightsAnalyticsContainer />
 

@@ -29,7 +29,7 @@ export default function RepoByIdPullByIdPage() {
             {/* Grid Layout for PR Details */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <PRMetadataCard {...pullRequest} />
-                <PRStatusCard {...pullRequest} />
+                <PRStatusCard {...pullRequest} pr={pullRequest} />
                 <PRReviewStatusCard {...pullRequest} />
                 <PRCommitsCard {...pullRequest} />
                 <PRCIStatusCard statuses_url={pullRequest.statuses_url} />

@@ -3,7 +3,6 @@ import InfoCard from "../InfoCard";
 
 export const AIReviewCard = ({ prNumber, repo }) => {
     const { aiReviews, loading, error } = useFetchAIReviews(repo, prNumber);
-    console.log("AI LOGS", { aiReviews, loading, error });
 
     // ✅ Handle API response format
     const reviewData = aiReviews?.data || [];

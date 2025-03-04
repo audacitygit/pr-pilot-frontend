@@ -8,8 +8,6 @@ export default function useFetchPullByNumber(repo: string, pullNumber: string) {
         () => fetchPullRequestByNumber(repo, pullNumber)
     );
 
-    console.log("data in fetcher", { data })
-
     return {
         pullRequest: data?.pullRequest || null,
         diff: data?.diff,

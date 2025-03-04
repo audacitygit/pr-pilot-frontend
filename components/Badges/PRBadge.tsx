@@ -8,7 +8,6 @@ interface PRBadgeProps {
 }
 
 export default function PRBadge({ id, title, pr }: PRBadgeProps) {
-    console.log("pull request", { pr })
     return (
         <>
 

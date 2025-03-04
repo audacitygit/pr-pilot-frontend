@@ -15,7 +15,6 @@ export const SessionProvider = ({ children }: { children: React.ReactNode }) => 
         const fetchSession = async () => {
             try {
                 const { data } = await PRPilotApiClientClient.get("/auth/github/session");
-                console.log(data)
                 setUserSession(data);
             } catch (err) {
                 console.error("Failed to fetch session:", err);

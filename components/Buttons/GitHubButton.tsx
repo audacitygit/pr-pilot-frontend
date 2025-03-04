@@ -19,8 +19,6 @@ export default function GitHubButton() {
             } catch (err) {
                 console.error("Failed to fetch session:", err);
 
-            } finally {
-                console.log("done with fetch session")
             }
         };
         fetchSession();

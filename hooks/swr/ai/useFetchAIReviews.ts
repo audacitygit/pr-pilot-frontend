@@ -2,8 +2,6 @@ import useSWR from "swr";
 import { fetchAIReviews } from "@/lib/api/fetchers/ai/fetchAIReviews";
 
 export default function useFetchAIReviews(repo?: string, prNumber?: string) {
-    console.log("PASSED TO HOOK", { repo, prNumber });
-
     const shouldFetch = !!repo && !!prNumber; // ✅ Prevents unnecessary API calls
 
     const { data, error } = useSWR(

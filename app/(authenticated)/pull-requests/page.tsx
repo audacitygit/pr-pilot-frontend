@@ -3,7 +3,7 @@
 import { Accordion } from "@/components/Accordion/Accordion";
 import { PullRequest } from "../../../types/pr";
 import { categorizePRs } from "../../../utils/helpers";
-import PRRAccordionItem from "@/components/PR_AccordionItem";
+import PRAccordionItem from "@/components/PR_AccordionItem";
 import { PRDetailsCard } from "@/components/Cards/PRDetailsCard";
 import { FileChangesCard } from "@/components/Cards/FileChangesCard";
 import { AIReviewCard } from "@/components/Cards/AiReviewCard";
@@ -40,11 +40,11 @@ export default function Pulls() {
                         </h2>
                         <Accordion>
                             {prs.map((pr: PullRequest) => (
-                                <PRRAccordionItem
+                                <PRAccordionItem
                                     id={pr.number}
+                                    prNumber={pr.number}
                                     key={pr.id}
                                     state={pr.state}
-                                    reviewed={pr.state !== "open"}
                                     title={pr.title}
                                     created_at={pr.created_at}
                                     user={pr.user.login}
@@ -55,8 +55,8 @@ export default function Pulls() {
                                 >
                                     <PRDetailsCard pr={pr} repoName={pr.base.repo.name} />
                                     <FileChangesCard number={pr.number} repoName={pr.base.repo.name} />
-                                    <AIReviewCard />
-                                </PRRAccordionItem>
+                                    <AIReviewCard prNumber={pr.number} repo={pr.base.repo.name} />
+                                </PRAccordionItem>
                             ))}
                         </Accordion>
                     </div>

@@ -9,7 +9,7 @@ interface InfoCardProps {
 
 const InfoCard: React.FC<InfoCardProps> = ({ title, description, status, children }) => {
     return (
-        <div className="bg-white shadow-md rounded-lg p-4 border border-gray-200 w-full max-w-2xl">
+        <div className="bg-white shadow-md rounded-lg p-4 border border-gray-200 w-full max-w-2xl h-80 overflow-y-auto">
             <div className="flex justify-between items-center mb-2">
                 <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
                 {status && (

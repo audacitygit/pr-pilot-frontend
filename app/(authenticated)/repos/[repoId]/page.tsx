@@ -3,7 +3,7 @@ import { Accordion } from "@/components/Accordion/Accordion";
 import { AIReviewCard } from "@/components/Cards/AiReviewCard";
 import { FileChangesCard } from "@/components/Cards/FileChangesCard";
 import { PRDetailsCard } from "@/components/Cards/PRDetailsCard";
-import PRRAccordionItem from "@/components/PR_AccordionItem";
+import PRAccordionItem from "@/components/PR_AccordionItem";
 import { useTheme } from "@/context/ThemeProvider";
 import { useFetchPullRequestByRepoId } from "@/hooks/swr/pulls/queries/useFetchPullRequestsByRepoId";
 import { PullRequest } from "@/types/pr";
@@ -26,7 +26,7 @@ export default function SingleRepoPullrequestSlugPage() {
                 <FolderX className="w-16 h-16 text-gray-400" />
                 <h2 className="text-2xl font-bold text-gray-700 dark:text-white">No Pull Requests Found</h2>
                 <p className="text-gray-500 dark:text-gray-400 max-w-md">
-                    This repository currently has no open pull requests. Try creating a new PR to see it listed here.
+                    This repository currently has no pull requests. Try creating a new PR to see it listed here.
                 </p>
             </div>
         );
@@ -56,11 +56,11 @@ export default function SingleRepoPullrequestSlugPage() {
                         </h2>
                         <Accordion>
                             {prs.map((pr: PullRequest) => (
-                                <PRRAccordionItem
+                                <PRAccordionItem
                                     id={pr.number}
+                                    prNumber={pr.number}
                                     key={pr.id}
                                     state={pr.state}
-                                    reviewed={pr.state !== "open"}
                                     title={pr.title}
                                     created_at={pr.created_at}
                                     user={pr.user.login}
@@ -71,8 +71,8 @@ export default function SingleRepoPullrequestSlugPage() {
                                 >
                                     <PRDetailsCard pr={pr} repoName={pr.base.repo.name} />
                                     <FileChangesCard number={pr.number} repoName={pr.base.repo.name} />
-                                    <AIReviewCard />
-                                </PRRAccordionItem>
+                                    <AIReviewCard prNumber={pr.number} repo={pr.base.repo.name} />
+                                </PRAccordionItem>
                             ))}
                         </Accordion>
                     </div>
